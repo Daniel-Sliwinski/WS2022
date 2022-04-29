@@ -1,2 +1,2 @@
 # WS2022
-Scraping data about soccer teams and their players.
+Scraping data about football teams and their players.
