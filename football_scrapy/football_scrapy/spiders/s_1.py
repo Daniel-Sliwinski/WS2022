@@ -3,18 +3,22 @@ import scrapy
 class Link(scrapy.Item):
     link = scrapy.Field()
 
-class MusiciansSpider(scrapy.Spider):
-    name = 'link_lists'
-    allowed_domains = ['https://en.wikipedia.org/']
-    start_urls = ['https://en.wikipedia.org/wiki/Lists_of_musicians']
+class FootballSpider(scrapy.Spider):
+    name = 'links'
+    allowed_domains = ['https://www.transfermarkt.pl/']
+    #range of years to scrape
+    years = range(2015,2022,1)
+
+    #list of links with years
+    start_urls = ['https://www.transfermarkt.pl/premier-league/startseite/wettbewerb/GB1/plus/?saison_id={}'.format(object) for object in years]
 
     def parse(self, response):
 
-        xpath = '//*[@id="mw-content-text"]/div[1]/div[4]/ul/li/a/@href'
+        xpath = '//*[@id="yw1"]/table/tbody/tr[*]/td[2]/a[1]/@href'
         selection = response.xpath(xpath)
         print(selection)
 
         for s in selection:
             l = Link()
-            l['link'] = 'https://en.wikipedia.org' + s.get()
+            l['link'] = 'https://www.transfermarkt.pl' + s.get()
             yield l

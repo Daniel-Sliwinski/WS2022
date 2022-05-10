@@ -51,6 +51,7 @@ for link in links[:2]:
             name = all_tds[1].find('div', {'class':'di nowrap'}).text
         except:
             name = ''
+        print(name)
         
         try:
             position = all_tds[1].find_all('tr')[-1].text
