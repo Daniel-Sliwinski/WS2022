@@ -13,6 +13,7 @@ class Player(scrapy.Item):
     season        = scrapy.Field()
     team        = scrapy.Field()
 
+
 class LinksSpider(scrapy.Spider):
     name = 'players'
     allowed_domains = ['https://www.transfermarkt.pl/']
@@ -69,27 +70,3 @@ class LinksSpider(scrapy.Spider):
             yield p
 
         #inspect_response(response,self)
-
-
-
-        #names = response.xpath('//*[@id="yw1"]/table/tbody/tr/td[2]/table/tbody/tr[1]/td[2]/div[1]/span/a/text()')
-
-        #for nm in names:
-            
-        #    p['name'] = nm.xpath.get()
-
-        #soup = bs(response.text, 'lxml')
-        #print(soup)
-
-        #print(soup.xpath('/html/body/div[4]/div[4]/div/div[1]/div[1]/div/div[1]/h1/span'))
-        #name_xpath = '/html/body/div[4]/div[4]/div/div[1]/div[1]/div/div[1]/h1/span'
-        #print(response.xpath(name_xpath).get())
-        #position_xpath       = '//*[@id="yw1"]/table/tbody/tr[*]/td[2]/table/tbody/tr[2]/td'
-        #print(start_urls)
-
-        #p['name']= response.xpath(name_xpath).getall()
-        #print(response.xpath(name_xpath).get())
-        #p['position']       = response.xpath(position_xpath).getall()
-
-        #yield p
-
