@@ -4,22 +4,12 @@ from scrapy.shell import inspect_response
 
 class Team(scrapy.Item):
     season        = scrapy.Field()
-    club        = scrapy.Field()
+    team        = scrapy.Field()
     players        = scrapy.Field()
     avg_age       = scrapy.Field()
     foreigners        = scrapy.Field()
     avg_market_value        = scrapy.Field()
     total_market_value        = scrapy.Field()
-
-class Team_standings(scrapy.Item):
-    position        = scrapy.Field()
-    club        = scrapy.Field()
-    games        = scrapy.Field()
-    goals       = scrapy.Field()
-    points        = scrapy.Field()
-    season        = scrapy.Field()
-
-
 
 class TeamSpider(scrapy.Spider):
     name = 'teams'
@@ -37,11 +27,10 @@ class TeamSpider(scrapy.Spider):
         rows = response.xpath('//div[@id="yw1"]/table/tbody/tr')
 
         for row in rows:
-            print(row.extract())
 
             t['season'] = response.xpath('//*[@id="wettbewerbsstartseite"]/div[1]/div[2]/h2/text()').get().strip()[-5:]
 
-            t['club'] = row.xpath("td[1]/a/@title").get()
+            t['team'] = row.xpath("td[1]/a/@title").get()
 
             t['players'] = row.xpath("td[3]/a/text()").get()
 
@@ -55,17 +44,4 @@ class TeamSpider(scrapy.Spider):
 
             yield t
 
-
-        #This part scrapes the other table, which contains data on team standings in a given season
-
-        t_rows = response.xpath('//div[@id="yw3"]/table/tbody/tr')
-
-        ts = Team_standings()
-
-        for row in t_rows:
-            ts['position'] = row.xpath('td[1]/text()').get()
-
-            yield ts
-
-        #inspect_response(response,self)
 

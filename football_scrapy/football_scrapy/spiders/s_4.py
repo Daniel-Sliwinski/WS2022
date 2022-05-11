@@ -1,9 +1,9 @@
 import scrapy
-from scrapy.shell import inspect_response
+
 
 class Team_standings(scrapy.Item):
     position        = scrapy.Field()
-    club        = scrapy.Field()
+    team        = scrapy.Field()
     games        = scrapy.Field()
     goals       = scrapy.Field()
     points        = scrapy.Field()
@@ -36,7 +36,7 @@ class TeamStandingsSpider(scrapy.Spider):
         
             ts['position'] = row.xpath('td[1]/text()').get()
 
-            ts['club'] = row.xpath('td[2]/a/@title').get()
+            ts['team'] = row.xpath('td[2]/a/@title').get()
 
             ts['games'] = row.xpath('td[4]/text()').get()
 
