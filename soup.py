@@ -37,55 +37,111 @@ print(links)
 d = pd.DataFrame({'name':[], 'position':[], 'age':[], 'nationality':[], 'market_value':[], 'season':[], 'team':[]})
 
 
-for link in links[:2]:
+#for link in links[:2]:
+#    html = requests.get(link, headers=headers)
+#    bs = BS(html.content, 'html.parser')
+#
+#
+#    rows = bs.find_all('tr', {'class': ['odd', 'even']})
+#
+#    for row in rows:
+#        all_tds = row.find_all('td', recursive = False)
+#        #print('this is next row')
+#        try:
+#            name = all_tds[1].find('div', {'class':'di nowrap'}).text
+#        except:
+#            name = ''
+#        print(name)
+#        
+#        try:
+#            position = all_tds[1].find_all('tr')[-1].text
+#        except:
+#            position = ''
+#        
+#        try:
+#            age = all_tds[2].text
+#        except:
+#            age = ''
+#        
+#        try:
+#            nationality = all_tds[3].find('img')['title']
+#        except:
+#            nationality = ''
+#        
+#        try:
+#            market_value = all_tds[5].find('a').text
+#        except:
+#            market_value = ''
+#        
+#        try:
+#            season = bs.find('div', {'class':'subkategorie-header'}).h2.text.strip()[-5:]
+#        except:
+#            season = ''
+#        
+#        try:
+#            team = bs.find('div', {'id':'verein_head'}).h1.text.strip()
+#        except:
+#            team = ''
+#        
+#        player = {'name':name, 'position':position, 'age':age, 'nationality':nationality, 'market_value':market_value, 'season':season, 'team':team}
+#
+#        d = d.append(player, ignore_index = True)
+#    #print(d)
+
+
+#this prepares a data frame for teams
+teams = pd.DataFrame({'season':[], 'team':[], 'players':[], 'avg_age':[], 'foreigners':[], 'avg_market_value':[], 'total_market_value':[]})
+
+for link in url_list[:2]:
     html = requests.get(link, headers=headers)
     bs = BS(html.content, 'html.parser')
 
-
-    rows = bs.find_all('tr', {'class': ['odd', 'even']})
+    rows = bs.find('div', {'id':'yw1'}).table.tbody.find_all('tr', recursive = False)
 
     for row in rows:
-        all_tds = row.find_all('td', recursive = False)
-        #print('this is next row')
-        try:
-            name = all_tds[1].find('div', {'class':'di nowrap'}).text
-        except:
-            name = ''
-        print(name)
+        all_tds = row.find_all('td', recursive= False)
+        print(all_tds)
+        print('')
+
         
+
         try:
-            position = all_tds[1].find_all('tr')[-1].text
-        except:
-            position = ''
-        
-        try:
-            age = all_tds[2].text
-        except:
-            age = ''
-        
-        try:
-            nationality = all_tds[3].find('img')['title']
-        except:
-            nationality = ''
-        
-        try:
-            market_value = all_tds[5].find('a').text
-        except:
-            market_value = ''
-        
-        try:
-            season = bs.find('div', {'class':'subkategorie-header'}).h2.text.strip()[-5:]
+            season = all_tds[0].a['href'].strip()[-2:] + '/' + str(int(all_tds[0].a['href'].strip()[-2:]) + 1)
         except:
             season = ''
-        
+        #
         try:
-            team = bs.find('div', {'id':'verein_head'}).h1.text.strip()
+            team = all_tds[0].a['title']
         except:
             team = ''
         
-        player = {'name':name, 'position':position, 'age':age, 'nationality':nationality, 'market_value':market_value, 'season':season, 'team':team}
+        try:
+            players = all_tds[2].a.text
+        except:
+            players = ''
+        
+        try:
+            avg_age = all_tds[3].text
+        except:
+            avg_age = ''
+        #
+        try:
+            foreigners = all_tds[4].text
+        except:
+            foreigners = ''
+        #
+        try:
+            avg_market_value = all_tds[5].text
+        except:
+            avg_market_value = ''
+        #
+        try:
+            total_market_value = all_tds[6].a.text
+        except:
+            total_market_value = ''
 
-        d = d.append(player, ignore_index = True)
-    print(d)
-
+        team = {'season':season, 'team':team, 'players':players, 'avg_age':avg_age, 'foreigners':foreigners, 'avg_market_value':avg_market_value, 'total_market_value':total_market_value}
+        
+        teams = teams.append(team, ignore_index = True)
+    #print(teams)
 #d.to_csv('players.csv')
