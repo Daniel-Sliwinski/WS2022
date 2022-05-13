@@ -1,5 +1,6 @@
-import scrapy
+#This spider scrapes team tables with their standings in every season.
 
+import scrapy
 
 class Team_standings(scrapy.Item):
     position        = scrapy.Field()
@@ -11,12 +12,12 @@ class Team_standings(scrapy.Item):
 
 class TeamStandingsSpider(scrapy.Spider):
     name = 'team_standings'
-    allowed_domains = ['https://www.transfermarkt.pl/']
+    allowed_domains = ['https://www.transfermarkt.com/']
 
     years = range(2015,2022,1)
 
     #list of links with years
-    start_urls = ['https://www.transfermarkt.pl/premier-league/startseite/wettbewerb/GB1/plus/?saison_id={}'.format(object) for object in years]
+    start_urls = ['https://www.transfermarkt.com/premier-league/startseite/wettbewerb/GB1/plus/?saison_id={}'.format(object) for object in years]
 
     def parse(self, response):
 
@@ -27,10 +28,10 @@ class TeamStandingsSpider(scrapy.Spider):
 
         if season != '21/22':
 
-            t_rows = response.xpath('//div[@id="yw3"]/table/tbody/tr')
+            t_rows = response.xpath('//div[@id="yw4"]/table/tbody/tr')
         
         else:
-            t_rows = response.xpath('//div[@id="yw4"]/table/tbody/tr')
+            t_rows = response.xpath('//div[@id="yw5"]/table/tbody/tr')
 
         for row in t_rows:
         

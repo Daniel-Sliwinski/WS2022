@@ -1,3 +1,7 @@
+#This code scrapes players and teams at the same time.
+#Set parameter of pages to scrape to true if you want to limit them to 100:
+limit_pages_100 = True
+
 import requests
 from bs4 import BeautifulSoup as BS
 import pandas as pd
@@ -32,6 +36,10 @@ for url in url_list:
 #this prepares a data frame for soccer players
 d = pd.DataFrame({'name':[], 'position':[], 'age':[], 'nationality':[], 'market_value':[], 'season':[], 'team':[], 'current_team':[]})
 
+if limit_pages_100:
+    links = links[:100]
+else:
+    pass
 
 for link in links:
     html = requests.get(link, headers=headers)

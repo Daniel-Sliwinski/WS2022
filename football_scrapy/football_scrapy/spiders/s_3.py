@@ -13,13 +13,13 @@ class Team(scrapy.Item):
 
 class TeamSpider(scrapy.Spider):
     name = 'teams'
-    allowed_domains = ['https://www.transfermarkt.pl/']
+    allowed_domains = ['https://www.transfermarkt.com/']
 
 
     years = range(2015,2022,1)
 
     #list of links with years
-    start_urls = ['https://www.transfermarkt.pl/premier-league/startseite/wettbewerb/GB1/plus/?saison_id={}'.format(object) for object in years]
+    start_urls = ['https://www.transfermarkt.com/premier-league/startseite/wettbewerb/GB1/plus/?saison_id={}'.format(object) for object in years]
 
     def parse(self, response):
         t = Team()

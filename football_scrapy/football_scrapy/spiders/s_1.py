@@ -16,7 +16,6 @@ class FootballSpider(scrapy.Spider):
 
         xpath = '//*[@id="yw1"]/table/tbody/tr[*]/td[2]/a[1]/@href'
         selection = response.xpath(xpath)
-        print(selection)
 
         for s in selection:
             l = Link()

@@ -1,7 +1,9 @@
+#This spider scrapes players from all teams.
+#Set parameter of pages to scrape to true if you want to limit them to 100:
+limit_pages_100 = True
+
 # -*- coding: utf-8 -*-
 import scrapy
-from bs4 import BeautifulSoup as bs
-from scrapy.shell import inspect_response
 import re
 
 class Player(scrapy.Item):
@@ -18,7 +20,7 @@ class Player(scrapy.Item):
 class LinksSpider(scrapy.Spider):
 
     name = 'players'
-    allowed_domains = ['https://www.transfermarkt.pl/']
+    allowed_domains = ['https://www.transfermarkt.com/']
 
     try:
         with open("links.csv", "rt") as f:
@@ -26,6 +28,10 @@ class LinksSpider(scrapy.Spider):
     except:
         start_urls = []
 
+    if limit_pages_100:
+        start_urls = start_urls[:100]
+    else:
+        pass
 
     def parse(self, response):
 
