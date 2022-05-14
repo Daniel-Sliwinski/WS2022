@@ -35,3 +35,9 @@ If you want to see the merged tables, please use the merged_tables.py file in th
 
 Use the following command to run a spider:
 scrapy crawl {name of the spider} -O {name of the output file}.
+
+## Selenium
+
+Run the selenium.py and scrape two data frames:
+players and teams dataframe. You don't have to change anything in the code, but you can. 
+You can customize the time sleeps and select the seasons you want to scrape.
